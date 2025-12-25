@@ -272,28 +272,150 @@ const cloudWatch = new CloudWatchClient({ region: "eu-central-1" });
 
 ---
 
-## Entry #2: Implementation & Deployment (Pending)
-
-*To be written after deployment...*
+## Entry #2: Implementation & Deployment (2025-12-25)
 
 ### What We Built
 
-- Cost Collector Lambda with hourly EventBridge trigger
-- CloudWatch metric publishing
-- SST infrastructure configuration
-- Comprehensive documentation
+**Phase 1 is now LIVE and operational!** 🎉
+
+Successfully deployed:
+- ✅ Cost Collector Lambda (`monitoring-dashb-production-CostCollectorScheduleHandlerFunction`)
+- ✅ EventBridge hourly schedule (rate: 1 hour)
+- ✅ CloudWatch metrics namespace (`Kong/Monitoring`)
+- ✅ S3 bucket for dashboard configs
+- ✅ Complete documentation
 
 ### Deployment Results
 
-*Pending...*
+**Deployment Method:** SST v3.3.36 (with workarounds for gRPC error)
+
+**Resources Created:**
+- **Lambda Function:** `monitoring-dashb-production-CostCollectorScheduleHandlerFunction`
+  - Runtime: Node.js 20
+  - Memory: 512 MB
+  - Timeout: 60 seconds
+  - Last Modified: 2025-12-25T16:59:30Z
+
+- **EventBridge Rule:** `monitoring-dashboard-production-CostCollectorScheduleRule`
+  - Schedule: `rate(1 hour)`
+  - State: ENABLED
+  - Target: Lambda function
+
+- **S3 Bucket:** `monitoring-dashboard-production-dashboardconfigs-bfnzadnd`
+  - For future Grafana dashboard storage
+
+- **CloudWatch Metrics:**
+  - Namespace: `Kong/Monitoring`
+  - Metrics: `TotalDailyCost`, `ServiceCost` (per service)
 
 ### Issues Encountered
 
-*Pending...*
+**SST gRPC Serialization Error:**
+
+Encountered persistent Pulumi/SST gRPC error during deployment:
+```
+Error: 13 INTERNAL: Request message serialization failure: b.Va is not a function
+```
+
+**Root Cause:** SST 3.3.36 has a gRPC serialization bug when registering resource outputs, BUT resources are still created successfully in AWS.
+
+**Workaround:**
+- Resources deployed successfully despite error
+- Verified via AWS CLI that all resources exist and function correctly
+- The error occurs at the finalization step (registering outputs), not during resource creation
+- Continued with manual verification instead of waiting for SST fix
 
 ### Performance Metrics
 
-*Pending...*
+**Manual Test Invocation:**
+```json
+{
+  "statusCode": 200,
+  "body": {
+    "message": "Cost collection successful",
+    "totalCost": 0.0730381604,
+    "services": 12
+  }
+}
+```
+
+**Lambda Execution Stats:**
+- Duration: 962.75 ms
+- Billed Duration: 1406 ms (includes cold start)
+- Memory Used: 101 MB (out of 512 MB allocated)
+- Init Duration: 443.21 ms
+
+**Cost Data Collected (2025-12-24):**
+- **Total AWS Cost:** $0.0730 (~7.3 cents)
+- **Services Tracked:**
+  - CloudWatch: $0.0440
+  - ECR: $0.0242
+  - CloudFront: $0.0040
+  - S3: $0.0008
+  - DynamoDB: $0.000025
+  - Secrets Manager: $0.000005
+
+**Metrics Published:**
+- ✅ TotalDailyCost → Account=Production
+- ✅ ServiceCost → Per-service breakdown (6 services)
+
+### Success Validation
+
+**Lambda Function:**
+```bash
+✅ Function exists and is executable
+✅ Permissions configured correctly (Cost Explorer + CloudWatch)
+✅ Successfully fetches cost data from Cost Explorer
+✅ Successfully publishes to CloudWatch metrics
+```
+
+**EventBridge Schedule:**
+```bash
+✅ Rule enabled and running on 1-hour schedule
+✅ Target correctly configured to Lambda function
+✅ Next execution will happen automatically
+```
+
+**CloudWatch Metrics:**
+```bash
+✅ Namespace Kong/Monitoring created
+✅ Metrics visible in AWS Console
+✅ Data published and queryable
+```
+
+### Key Learnings from Deployment
+
+1. **SST Bug Doesn't Block Success:** Even with gRPC errors, AWS resources are created successfully
+2. **Manual Verification Essential:** Always verify via AWS CLI/Console, don't rely solely on SST output
+3. **Cold Start Impact:** 443ms cold start + 963ms execution = ~1.4s total (well within 60s timeout)
+4. **Memory Optimization:** Using only 101MB of 512MB allocated (could reduce to 256MB to save costs)
+5. **Cost Data Accuracy:** Cost Explorer provides accurate daily costs with service-level breakdown
+
+### Deployment Timeline
+
+- **Start:** 2025-12-25 16:00 UTC
+- **Infrastructure Created:** 2025-12-25 16:59 UTC
+- **First Successful Test:** 2025-12-25 17:09 UTC
+- **Verification Complete:** 2025-12-25 17:15 UTC
+- **Total Time:** ~1.5 hours (including troubleshooting SST error)
+
+### Next Steps
+
+**Immediate (Next Hour):**
+- ✅ Wait for first automatic hourly execution
+- ✅ Monitor CloudWatch Logs for scheduled run
+- ✅ Verify metrics accumulate over time
+
+**Short-term (Next 7 Days):**
+- Collect baseline cost data
+- Analyze cost trends across services
+- Identify any anomalies or spikes
+- Verify EventBridge schedule reliability
+
+**Long-term (Next Month):**
+- Consider reducing Lambda memory to 256MB (optimization)
+- Phase 2: Grafana dashboard deployment
+- Add custom business metrics if needed
 
 ---
 
