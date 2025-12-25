@@ -1,0 +1,15 @@
+{
+  "name": "@monitoring/infra",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "sst": "sst"
+  },
+  "dependencies": {
+    "sst": "3.3.36"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

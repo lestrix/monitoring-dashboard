@@ -1,0 +1,29 @@
+{
+  "name": "monitoring-dashboard",
+  "version": "1.0.0",
+  "description": "Centralized monitoring dashboard for Kong's serverless projects",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cd infra && pnpm sst dev",
+    "deploy": "cd infra && pnpm sst deploy",
+    "remove": "cd infra && pnpm sst remove",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint"
+  },
+  "keywords": [
+    "monitoring",
+    "grafana",
+    "cloudwatch",
+    "serverless",
+    "aws",
+    "dashboard"
+  ],
+  "author": {
+    "name": "Kong",
+    "description": "Physicist & Software Developer"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@10.26.1"
+}
