@@ -1,0 +1,518 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "cloudwatch",
+          "uid": "CloudWatch"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "CloudWatch"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.05
+              },
+              {
+                "color": "red",
+                "value": 0.10
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "CloudWatch"
+          },
+          "dimensions": {
+            "Account": "Production"
+          },
+          "expression": "",
+          "id": "",
+          "label": "Yesterday's Cost",
+          "logGroups": [],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "TotalDailyCost",
+          "metricQueryType": 0,
+          "namespace": "Kong/Monitoring",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-central-1",
+          "sqlExpression": "",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Yesterday's Total Cost",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "CloudWatch"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 18,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": ["last", "mean", "sum"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "CloudWatch"
+          },
+          "dimensions": {
+            "Account": "Production"
+          },
+          "expression": "",
+          "id": "",
+          "label": "Total Daily Cost",
+          "metricName": "TotalDailyCost",
+          "metricQueryType": 0,
+          "namespace": "Kong/Monitoring",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-central-1",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Total Daily Cost Trend (30 Days)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "CloudWatch"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            }
+          },
+          "mappings": [],
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "displayLabels": ["percent"],
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": ["value", "percent"]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["sum"],
+          "fields": ""
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "CloudWatch"
+          },
+          "dimensions": {
+            "Service": "*"
+          },
+          "expression": "",
+          "id": "",
+          "label": "${PROP('Dim.Service')}",
+          "metricName": "ServiceCost",
+          "metricQueryType": 0,
+          "namespace": "Kong/Monitoring",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-central-1",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Cost by Service (Last 7 Days)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "CloudWatch"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": ["sum"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "normal",
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "CloudWatch"
+          },
+          "dimensions": {
+            "Service": "*"
+          },
+          "expression": "",
+          "id": "",
+          "label": "${PROP('Dim.Service')}",
+          "metricName": "ServiceCost",
+          "metricQueryType": 0,
+          "namespace": "Kong/Monitoring",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-central-1",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Service Cost Breakdown Over Time",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "CloudWatch"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Service"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 250
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Total"
+          }
+        ]
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "CloudWatch"
+          },
+          "dimensions": {
+            "Service": "*"
+          },
+          "expression": "",
+          "id": "",
+          "label": "${PROP('Dim.Service')}",
+          "metricName": "ServiceCost",
+          "metricQueryType": 0,
+          "namespace": "Kong/Monitoring",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-central-1",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Detailed Service Costs",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": ["last", "mean", "sum", "max", "min"]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Field": 0,
+              "Last": 1,
+              "Mean": 2,
+              "Total": 3,
+              "Max": 4,
+              "Min": 5
+            },
+            "renameByName": {
+              "Field": "Service",
+              "Last": "Latest",
+              "Mean": "Average",
+              "Total": "Total (7d)",
+              "Max": "Peak",
+              "Min": "Minimum"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": ["aws", "costs", "monitoring"],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "AWS Cost Monitoring - Kong's Projects",
+  "uid": "aws-cost-monitoring",
+  "version": 0,
+  "weekStart": ""
+}

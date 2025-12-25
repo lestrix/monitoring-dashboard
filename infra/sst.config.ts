@@ -53,8 +53,12 @@ export default $config({
       },
     });
 
-    // S3 bucket for Grafana dashboard configurations (future)
+    // S3 bucket for Grafana dashboard configurations
     const dashboardBucket = new sst.aws.Bucket("DashboardConfigs");
+
+    // Note: Grafana container deployment via SST requires manual ECR push
+    // See apps/grafana/README.md for deployment instructions
+    // Phase 2 will be deployed using direct AWS Lambda console or terraform
 
     // Outputs
     return {
